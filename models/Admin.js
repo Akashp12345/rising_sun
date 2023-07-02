@@ -43,4 +43,4 @@ const AdminSchema = new Schema({
 
 const Admin = model("Admin", AdminSchema)
 
-module.export=Admin
+module.exports=Admin
