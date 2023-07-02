@@ -3,6 +3,7 @@ const express=require("express")
 const mongoose=require("mongoose")
 const dotenv=require("dotenv")
 const path =require("path")
+const bodyparser=require("body-parser")
 const User=require("./models/User.js")
 const FoodItem = require('./models/FoodItem.js');
 const Table = require('./models/Table.js');
@@ -10,9 +11,10 @@ const Order = require('./models/Order.js');
 
 dotenv.config();
 mongoose.set('strictQuery', false);
-const __dirname = path.resolve();
 const app = express();
 app.use(express.json());
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
 
 const PORT = process.env.PORT || 5000;
 
@@ -284,13 +286,13 @@ app.post("/orderFoodItems", async (req, res) => {
 
 // api routes ends here
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
   
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
-    });
-  }  
+//     app.get('*', (req, res) => {
+//       res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'))
+//     });
+//   }  
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
